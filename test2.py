@@ -8,7 +8,7 @@ import json
 def preprocesstweets():
     df1 = pd.read_csv('tests/covidvaccine.csv', usecols=['text'])
     df1.info(verbose=False, memory_usage="deep")
-    df1= df1
+
     list1 = df1.values.tolist()
 
     hashtags = []

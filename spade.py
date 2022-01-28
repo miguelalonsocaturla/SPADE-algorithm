@@ -1,6 +1,7 @@
 from typing import Tuple, Union
 import pandas as pd
 from pandasql import sqldf
+from unittest import TestCase
 import test2
 
 def read_dataset(path: str) -> pd.DataFrame:
@@ -207,10 +208,10 @@ def spade(df: pd.DataFrame, min_sup: int):
     while item_tree:
         supports, item_tree = find_remaining(item_tree, supports, min_sup)
     return supports
+class spadetest(TestCase):
+    def test_spadealgorithm(self):
 
-if __name__ == "__main__":
-    #test2.preprocesstweets()
-    df = read_dataset('tests/covidvaccinedata.text')
-    print(df)
-    support_results = spade(df, 200)
-    print(support_results)
+        #test2.preprocesstweets()
+        df = read_dataset('tests/covidvaccinedata.text')
+        support_results = spade(df, 3500)
+        print(support_results)
