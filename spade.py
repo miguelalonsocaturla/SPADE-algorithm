@@ -164,9 +164,6 @@ def find_remaining(item_tree: dict, supports: pd.DataFrame, min_sup: int) -> Tup
                 if item1 == item2:
                     continue
                 if len(item1) == len(item2):
-                    #event with event PB with PD should give: PBD
-                    #seq with seq P->A with P->F should give: P->AF, P->A->F, P->F->A
-                    #print(f"Item1: {item1}\nItem2: {item2}")
                     is_event, generated, sdfs = generate_for_equal_len(item1, item2, branch, crtl_lst)
                     if is_event:
                         if repr(generated) not in crtl_lst:
@@ -185,7 +182,6 @@ def find_remaining(item_tree: dict, supports: pd.DataFrame, min_sup: int) -> Tup
                                     supports = supports.append({'Items': repr(item), 'Support': support_value}, ignore_index=True)
                                     three_dict[repr(item1)][repr(item)] = sdf
                                 crtl_lst.add(repr(item))
-                #event atom with sequence atom: PB with P->A should give PB->A
                 else:
                     generated, sdf = generate_for_unequal_len(item1, item2, branch, crtl_lst)
                     if repr(generated) not in crtl_lst:
@@ -203,7 +199,7 @@ def spade(df: pd.DataFrame, min_sup: int):
     # (STEP 1): Find atoms and their support
     supports, F1 = find_F1(df, min_sup)
     #print(f"Step 1.:\n{supports}\n{F1}\n")
-    # 2 Find frequent 2-sequences (containing 2 items) e.g. {AB}, {A}->{B}, {B}->{A}
+    # 2 Find frequent 2-sequences (containing 2 items)
     supports, item_tree = find_F2(F1, supports, min_sup)
     #print(f"Step 2.:\n{supports}\n{item_tree}\n")
     # 3 Find equivalence classes / sequences longer than 3 items
